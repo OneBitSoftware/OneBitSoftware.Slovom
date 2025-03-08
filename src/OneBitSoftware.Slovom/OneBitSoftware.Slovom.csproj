@@ -4,6 +4,14 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>OneBitSoftware.Slovom</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Radi Atanassov</Authors>
+    <Company>OneBit Software</Company>
+    <Description>A .NET library for converting currency values into Bulgarian words, tailored for accounting needs.</Description>
+    <PackageTags>NumbersToWords;Bulgarian;Accounting</PackageTags>
+    <RepositoryUrl>https://github.com/OneBitSoftware/OneBitSoftware.Slovom</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
