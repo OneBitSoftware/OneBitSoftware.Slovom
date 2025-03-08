@@ -25,7 +25,7 @@ jobs:
       run: dotnet build --no-restore --configuration Release src/OneBitSoftware.Slovom.sln
 
     - name: dotnet test
-      run: dotnet test --no-build --verbosity normal src/OneBitSoftware.Slovom.sln
+      run: dotnet test --no-build --configuration Release --verbosity normal src/OneBitSoftware.Slovom.sln
 
     - name: dotnet pack
       run: dotnet pack --configuration Release --no-build src/OneBitSoftware.Slovom/OneBitSoftware.Slovom.csproj
