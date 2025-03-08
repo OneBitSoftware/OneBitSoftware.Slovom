@@ -13,6 +13,12 @@ Or via the .NET Core command line interface:
 dotnet add package OneBitSoftware.Slovom
 
 ## Examples
+|Input|Output|
+|--------|-------|
+|0| нула лева    |
+| 1 | един лев     |
+| 2    | "два лева"    |
+| 19 | "деветнадесет лева" |
 
 ## Credits
 Inspired by:
