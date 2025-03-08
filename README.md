@@ -1,6 +1,16 @@
 # OneBitSoftware.Slovom
 ![test](https://github.com/OneBitSoftware/OneBitSoftware.Slovom/actions/workflows/dotnet.yml/badge.svg)
+
 A .NET library that converts currency values into words in Bulgarian for accounting purposes
+
+## Installation
+You can install the OneBitSoftware.Slovom assembly through the NuGet package [NuGet](https://www.nuget.org/packages/OneBitSoftware.Slovom):
+```
+Install-Package OneBitSoftware.Slovom
+```
+Or via the .NET Core command line interface:
+```
+dotnet add package OneBitSoftware.Slovom
 
 ## Examples
 
