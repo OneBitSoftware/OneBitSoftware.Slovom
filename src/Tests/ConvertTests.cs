@@ -68,5 +68,18 @@ namespace Tests
             // Assert
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(-1, "един лев")] // Assuming negative values are treated as zero
+        [InlineData(-0.01, "една стотинка")] // Assuming negative values are treated as zero
+        [InlineData(-32478.27, "тридесет и две хиляди четиристотин седемдесет и осем лева и 27 ст.")]
+        public void NumberToWordsBG_ShouldReturnCorrectWordsForNegativeValues(decimal number, string expected)
+        {
+            // Act
+            string result = NumbersToWords.Convert(number);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
     }
 }

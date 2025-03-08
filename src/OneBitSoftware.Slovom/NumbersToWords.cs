@@ -16,7 +16,7 @@
 
         static string ConvertWholeNumber(int n)
         {
-            if (n < 10)
+            if (n < 20)
                 return under20[n];
             else if (n < 100)
                 return Tens(n);
@@ -32,17 +32,13 @@
 
         private static string Tens(int n)
         {
+            if (n < 20)
+                return under20[n];
+
             var i = n / 10;
             var d = n % 10;
 
-            if (n < 20)
-            {
-                return under20[n];
-            }
-            else
-            {
-                return tens[i] + (d == 0 ? "" : " и " + ConvertWholeNumber(d));
-            }
+            return tens[i] + (d == 0 ? "" : " и " + under20[d]);
         }
 
         static string Hundreds(int n)
@@ -145,7 +141,7 @@
                 {
                     if (e < 100)
                     {
-                        return tens[o] + " и една хиляди и " + Tens(e); 
+                        return tens[o] + " и една хиляди и " + Tens(e);
                     }
 
                     if (tware == 0)
@@ -168,7 +164,7 @@
 
                     if (tware == 0)
                     {
-                        return tens[o] + " и две хиляди и " + Hundreds(e); 
+                        return tens[o] + " и две хиляди и " + Hundreds(e);
                     }
 
                     if (tware > 0)
@@ -200,6 +196,8 @@
             {
                 return under20[0] + AppendLvFemale; // нула лева
             }
+
+            number = Math.Abs(number); // Convert negative number to positive
 
             int leva = (int)number;
             int stotinki = (int)((number % 1.0m) * 100);
