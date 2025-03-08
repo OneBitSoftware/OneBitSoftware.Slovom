@@ -9,6 +9,17 @@ A .NET library that converts currency values into words in Bulgarian for account
 - It writes decimal fractions in the short form: `X лева и ст.` when the value is above zero, and the full word when it is under the value of `1`: `девет стотинки`.
 - The current maximum value is `999999.99` and the minimum is `0.`.
 
+## AI Story
+This project is my first attempt to build something with GitHub Copilot. I did my best to not give up on it, however my patience was over at one point.
+GitHub Copilot just couldn't get my requirements thoroughly enough and it never gave something that works without me intervening.
+I made many attempts to improve functions with detailed prompts, but it never gave enough value.
+
+Generating InlineData for the tests failed into an infinite loop (and the token limit kicked in).
+
+Nothing generated as code passed all the tests no matter how I structured prompts.
+
+I eventually had to correct the code myself. The end result is an abomination, but it works.
+
 ## Installation
 You can install the OneBitSoftware.Slovom assembly through the NuGet package [NuGet](https://www.nuget.org/packages/OneBitSoftware.Slovom):
 ```
@@ -32,6 +43,9 @@ dotnet add package OneBitSoftware.Slovom
 |1019.78|хиляда и деветнадесет лева и 78 ст.|
 |1119.78|хиляда сто и деветнадесет лева и 78 ст.|
 |32478.27|тридесет и две хиляди четиристотин седемдесет и осем лева и 27 ст.|
+
+## Contributing
+Feel free to raise a PR to improve the code quality or add new features.
 
 ## Credits
 Inspired by:
