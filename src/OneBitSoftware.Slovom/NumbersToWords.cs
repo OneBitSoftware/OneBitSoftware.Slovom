@@ -48,11 +48,11 @@
 
             if (n < 120)
             {
-                return "сто и " + under20[d];
+                return hundreds[i] + " и " + under20[d];
             }
             else if (n >= 120 && n < 200)
             {
-                return "сто " + ConvertWholeNumber(d);
+                return hundreds[i] + " " + ConvertWholeNumber(d);
             }
             else
             {
@@ -70,25 +70,13 @@
 
             if (n == 1000) return "хиляда";
 
-            if (n > 1000 && n < 1099)
-            {
-                return "хиляда и " + Tens(d);
-            }
+            if (n > 1000 && n < 1099) return "хиляда и " + Tens(d);
 
-            if (n > 1099 && n < 2000)
-            {
-                return "хиляда " + Hundreds(d);
-            }
+            if (n > 1099 && n < 2000) return "хиляда " + Hundreds(d);
 
-            if (d == 0) // 2000,3000,4000, etc
-            {
-                return units[i] + " хиляди";
-            }
+            if (d == 0) return units[i] + " хиляди"; // 2000,3000,4000, etc
 
-            if (d < 100)
-            {
-                return units[i] + " хиляди и " + Tens(d);
-            }
+            if (d < 100) return units[i] + " хиляди и " + Tens(d);
 
             return units[i] + " хиляди " + Hundreds(d);
         }
@@ -100,7 +88,7 @@
             var e = n % 1000;
             var b = n / 1000;
             var i = number / 1000;
-            var t = number / 10;
+            var t = i / 100;
             var s = i % 10;
             var of = e % 100;
             var tware = of % 10;
@@ -124,88 +112,64 @@
             {
                 if (of == 0) // 11100, 11900, 11800 , etc
                 {
-                    if (e == 0)
-                    {
-                        return teens[s] + " хиляди";
-                    }
+                    if (e == 0) return teens[s] + " хиляди";
 
-                    return teens[s] + " хиляди и " + Hundreds(e);
+                    return BuildThousandsWithAnd(teens[s], Hundreds(e));
                 }
 
-                return teens[s] + " хиляди " + Hundreds(e);
+                return BuildThousandsWithoutAnd(teens[s], Hundreds(e));
             }
 
             if (number > 20000 && number < 99999)
             {
                 if (b == 1)
                 {
-                    if (e < 100)
-                    {
-                        return tens[o] + " и една хиляди и " + Tens(e);
-                    }
+                    if (e < 100)  return tens[o] + " и една хиляди и " + Tens(e);
 
-                    if (tware == 0)
-                    {
-                        return tens[o] + " и една хиляди и " + Hundreds(e);
-                    }
+                    if (tware == 0) return tens[o] + " и една хиляди и " + Hundreds(e);
 
-                    if (tware > 0)
-                    {
-                        return tens[o] + " и една хиляди " + Hundreds(e);
-                    }
+                    if (tware > 0) return tens[o] + " и една хиляди " + Hundreds(e);
                 }
 
                 if (b == 2)
                 {
-                    if (e < 100)
-                    {
-                        return tens[o] + " и две хиляди и " + Tens(e);
-                    }
+                    if (e < 100) return tens[o] + " и две хиляди и " + Tens(e);
 
-                    if (tware == 0)
-                    {
-                        return tens[o] + " и две хиляди и " + Hundreds(e);
-                    }
+                    if (tware == 0) return tens[o] + " и две хиляди и " + Hundreds(e);
 
-                    if (tware > 0)
-                    {
-                        return tens[o] + " и две хиляди " + Hundreds(e);
-                    }
+                    if (tware > 0) return tens[o] + " и две хиляди " + Hundreds(e);
                 }
 
-                return Tens(i) + " хиляди и " + Hundreds(e);
+                return BuildThousandsWithAnd(Tens(i), Hundreds(e));
             }
 
-            if (n == 0) // 10000,20000,30000, etc
-            {
-                return tens[o] + " хиляди";
-            }
+            if (n == 0) return tens[o] + " хиляди"; // 10000,20000,30000, etc
 
-            if (n < 100)
-            {
-                return tens[o] + " хиляди и " + Tens(of);
-            }
+            if (n < 100) return BuildThousandsWithAnd(tens[o], Tens(of));
 
-            return Tens(i) + " хиляди " + Hundreds(e);
+            return BuildThousandsWithoutAnd(Tens(i), Hundreds(e));
         }
 
+        static string BuildThousandsWithoutAnd(string thousands, string afterThousands)
+        {
+            return thousands + " хиляди " + afterThousands;
+        }
+
+        static string BuildThousandsWithAnd(string thousands, string afterThousands)
+        {
+            return thousands + " хиляди и " + afterThousands;
+        }
 
         public static string Convert(decimal number)
         {
-            if (number == 0 || number == 0.0m)
-            {
-                return under20[0] + AppendLvFemale; // нула лева
-            }
+            if (number == 0 || number == 0.0m)  return under20[0] + AppendLvFemale; // нула лева
 
             number = Math.Abs(number); // Convert negative number to positive
 
             int leva = (int)number;
             int stotinki = (int)((number % 1.0m) * 100);
 
-            if (number == 1 && stotinki == 0)
-            {
-                return under20[leva] + AppendLvMale; // един лев
-            }
+            if (number == 1 && stotinki == 0) return under20[leva] + AppendLvMale; // един лев
 
             string levaWords = leva != 1 ? ConvertWholeNumber(leva) + AppendLvFemale : "един" + AppendLvMale;
 

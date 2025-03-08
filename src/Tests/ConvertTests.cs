@@ -1,11 +1,10 @@
-﻿using Xunit;
-using OneBitSoftware.Slovom;
-
-namespace Tests
+﻿namespace Tests
 {
+    using Xunit;
+    using OneBitSoftware.Slovom;
+
     public class ConvertTests
     {
-
         [Theory]
         [InlineData(0, "нула лева")]
         [InlineData(1, "един лев")]
