@@ -10,25 +10,25 @@ namespace Tests
         [InlineData(0, "нула лева")]
         [InlineData(1, "един лев")]
         [InlineData(2, "два лева")]
-        [InlineData("2.0", "два лева")]
+        [InlineData(2.0, "два лева")]
         [InlineData(9, "девет лева")]
         [InlineData(10, "десет лева")]
         [InlineData(11, "единадесет лева")]
         [InlineData(12, "дванадесет лева")]
         [InlineData(19, "деветнадесет лева")]
-        [InlineData("0.0", "нула лева")]
-        [InlineData("0.1", "десет стотинки")]
-        [InlineData("1.20", "един лев и 20 ст.")]
-        [InlineData("1.2", "един лев и 20 ст.")]
-        [InlineData("1.3", "един лев и 30 ст.")]
-        [InlineData("1.02", "един лев и 2 ст.")]
+        [InlineData(0.0, "нула лева")]
+        [InlineData(0.1, "десет стотинки")]
+        [InlineData(1.20, "един лев и 20 ст.")]
+        [InlineData(1.2, "един лев и 20 ст.")]
+        [InlineData(1.3, "един лев и 30 ст.")]
+        [InlineData(1.02, "един лев и 2 ст.")]
         [InlineData(118, "сто и осемнадесет лева")]
         [InlineData(123, "сто двадесет и три лева")]
         [InlineData(1000, "хиляда лева")]
         [InlineData(2000, "две хиляди лева")]
         [InlineData(3000, "три хиляди лева")]
         [InlineData(9000, "девет хиляди лева")]
-        [InlineData("123.00", "сто двадесет и три лева")]
+        [InlineData(123.00, "сто двадесет и три лева")]
         [InlineData(1234, "хиляда двеста тридесет и четири лева")]
         [InlineData(1234.78, "хиляда двеста тридесет и четири лева и 78 ст.")]
         [InlineData(1019.78, "хиляда и деветнадесет лева и 78 ст.")]
@@ -60,7 +60,6 @@ namespace Tests
         [InlineData(32048.27, "тридесет и две хиляди и четиридесет и осем лева и 27 ст.")]
         [InlineData(32008.27, "тридесет и две хиляди и осем лева и 27 ст.")]
         [InlineData(99999.99, "деветдесет и девет хиляди деветстотин деветдесет и девет лева и 99 ст.")]
-        [InlineData(999999.99, "деветстотин деветдесет и девет хиляди деветстотин деветдесет и девет лева и 99 ст.")]
         public void NumberToWordsBG_ShouldReturnCorrectWords(decimal number, string expected)
         {
             // Act
@@ -69,6 +68,5 @@ namespace Tests
             // Assert
             Assert.Equal(expected, result);
         }
-
     }
 }

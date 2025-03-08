@@ -12,6 +12,7 @@
         static string AppendLvFemale = " лева";
         static string AppendStotinki = " стотинки";
         static string AppendStotinka = " стотинка";
+        static string AppendStotinkaShort = "ст.";
 
         static string ConvertWholeNumber(int n)
         {
@@ -96,102 +97,100 @@
             return units[i] + " хиляди " + Hundreds(d);
         }
 
-        private static string TensOfThousands(int n)
+        private static string TensOfThousands(int number)
         {
-            var i = n / 10000;
-            var d = n % 10000;
-            var e = d % 1000;
-            var j = d / 1000;
-            var g = n / 1000;
-            var h = n / 10;
-            var f = g % 10;
-            var r = e % 100;
-            var t = r % 10;
+            var o = number / 10000;
+            var n = number % 10000;
+            var e = n % 1000;
+            var b = n / 1000;
+            var i = number / 1000;
+            var t = number / 10;
+            var s = i % 10;
+            var of = e % 100;
+            var tware = of % 10;
 
-            //if (n == 10000) return "десет хиляди";
-
-            if (n > 10000 && n < 10099)
+            if (number > 10000 && number < 10099)
             {
-                return tens[i] + " хиляди и " + Tens(d);
+                return tens[o] + " хиляди и " + Tens(n);
             }
 
-            if (n >= 10099 && n < 11000)
+            if (number >= 10099 && number < 11000)
             {
-                if (r == 0) // 10100, 10900, 10800 , etc
+                if (of == 0) // 10100, 10900, 10800 , etc
                 {
-                    return tens[i] + " хиляди и " + Hundreds(d);
+                    return tens[o] + " хиляди и " + Hundreds(n);
                 }
 
-                return tens[i] + " хиляди " + Hundreds(d);
+                return tens[o] + " хиляди " + Hundreds(n);
             }
 
-            if (n >= 11000 && n < 20000)
+            if (number >= 11000 && number < 20000)
             {
-                if (r == 0) // 11100, 11900, 11800 , etc
+                if (of == 0) // 11100, 11900, 11800 , etc
                 {
                     if (e == 0)
                     {
-                        return teens[f] + " хиляди";
+                        return teens[s] + " хиляди";
                     }
 
-                    return teens[f] + " хиляди и " + Hundreds(e);
+                    return teens[s] + " хиляди и " + Hundreds(e);
                 }
 
-                return teens[f] + " хиляди " + Hundreds(e);
+                return teens[s] + " хиляди " + Hundreds(e);
             }
 
-            if (n > 20000 && n < 99999)
+            if (number > 20000 && number < 99999)
             {
-                if (j == 1)
+                if (b == 1)
                 {
                     if (e < 100)
                     {
-                        return tens[i] + " и една хиляди и " + Tens(e); 
+                        return tens[o] + " и една хиляди и " + Tens(e); 
                     }
 
-                    if (t == 0)
+                    if (tware == 0)
                     {
-                        return tens[i] + " и една хиляди и " + Hundreds(e);
+                        return tens[o] + " и една хиляди и " + Hundreds(e);
                     }
 
-                    if (t > 0)
+                    if (tware > 0)
                     {
-                        return tens[i] + " и една хиляди " + Hundreds(e);
+                        return tens[o] + " и една хиляди " + Hundreds(e);
                     }
                 }
 
-                if (j == 2)
+                if (b == 2)
                 {
                     if (e < 100)
                     {
-                        return tens[i] + " и две хиляди и " + Tens(e);
+                        return tens[o] + " и две хиляди и " + Tens(e);
                     }
 
-                    if (t == 0)
+                    if (tware == 0)
                     {
-                        return tens[i] + " и две хиляди и " + Hundreds(e); 
+                        return tens[o] + " и две хиляди и " + Hundreds(e); 
                     }
 
-                    if (t > 0)
+                    if (tware > 0)
                     {
-                        return tens[i] + " и две хиляди " + Hundreds(e);
+                        return tens[o] + " и две хиляди " + Hundreds(e);
                     }
                 }
 
-                return Tens(g) + " хиляди и " + Hundreds(e);
+                return Tens(i) + " хиляди и " + Hundreds(e);
             }
 
-            if (d == 0) // 10000,20000,30000, etc
+            if (n == 0) // 10000,20000,30000, etc
             {
-                return tens[i] + " хиляди";
+                return tens[o] + " хиляди";
             }
 
-            if (d < 100)
+            if (n < 100)
             {
-                return tens[i] + " хиляди и " + Tens(r);
+                return tens[o] + " хиляди и " + Tens(of);
             }
 
-            return Tens(g) + " хиляди " + Hundreds(e);
+            return Tens(i) + " хиляди " + Hundreds(e);
         }
 
 
@@ -210,23 +209,23 @@
                 return under20[leva] + AppendLvMale; // един лев
             }
 
-            string levaWords = leva != 1 ? ConvertWholeNumber(leva) + " лева" : "един лев";
+            string levaWords = leva != 1 ? ConvertWholeNumber(leva) + AppendLvFemale : "един" + AppendLvMale;
 
             string stotinkiWords;
 
             if (leva == 0)
             {
-                if (stotinki == 0) return "нула лева";
+                if (stotinki == 0) return "нула" + AppendLvFemale;
                 if (stotinki == 1) return "една" + AppendStotinka;
                 if (stotinki == 2) return "две" + AppendStotinki;
                 if (stotinki == 10) return "десет" + AppendStotinki;
                 if (stotinki < 20) return under20[stotinki] + AppendStotinki;
 
-                stotinkiWords = stotinki.ToString() + " ст.";
+                stotinkiWords = stotinki.ToString() + " " + AppendStotinkaShort;
             }
             else
             {
-                stotinkiWords = stotinki.ToString() + " ст.";
+                stotinkiWords = stotinki.ToString() + " " + AppendStotinkaShort;
             }
 
             if (leva == 0)
