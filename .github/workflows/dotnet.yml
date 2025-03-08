@@ -18,19 +18,19 @@ jobs:
       with:
         dotnet-version: 9.x
 
-    - name: Restore dependencies
+    - name: dotnet restore
       run: dotnet restore src/OneBitSoftware.Slovom.sln
 
-    - name: Build
+    - name: dotnet build
       run: dotnet build --no-restore --configuration Release src/OneBitSoftware.Slovom.sln
 
-    - name: Test
+    - name: dotnet test
       run: dotnet test --no-build --verbosity normal src/OneBitSoftware.Slovom.sln
 
-    - name: Pack
+    - name: dotnet pack
       run: dotnet pack --configuration Release --no-build src/OneBitSoftware.Slovom/OneBitSoftware.Slovom.csproj
 
-    - name: Publish to NuGet
+    - name: dotnet nuget push
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
       run: dotnet nuget push bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json

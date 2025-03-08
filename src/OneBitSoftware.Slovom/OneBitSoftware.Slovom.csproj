@@ -12,7 +12,7 @@
 		<Description>A .NET library for converting currency values into Bulgarian words, tailored for accounting needs.</Description>
 		<PackageTags>NumbersToWords;Bulgarian;Accounting</PackageTags>
 		<RepositoryUrl>https://github.com/OneBitSoftware/OneBitSoftware.Slovom</RepositoryUrl>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
