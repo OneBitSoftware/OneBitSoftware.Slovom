@@ -4,6 +4,8 @@
 
 A .NET library that converts currency values into words in Bulgarian for accounting purposes.
 
+Example: Input: `32048.27` Outpud: `тридесет и две хиляди и четиридесет и осем лева и 27 ст.`
+
 ## Functionality
 - It takes into consideration the [grammatical gender](https://en.wikipedia.org/wiki/Grammatical_gender).
 - It writes decimal fractions in the short form: `X лева и ст.` when the value is above zero, and the full word when it is under the value of `1`: `девет стотинки`.
