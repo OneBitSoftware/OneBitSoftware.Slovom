@@ -12,8 +12,19 @@
 		<Description>A .NET library for converting currency values into Bulgarian words, tailored for accounting needs.</Description>
 		<PackageTags>NumbersToWords;Bulgarian;Accounting</PackageTags>
 		<RepositoryUrl>https://github.com/OneBitSoftware/OneBitSoftware.Slovom</RepositoryUrl>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<Title>A .NET library for converting currency values into Bulgarian words</Title>
+		<Copyright>OneBit Software</Copyright>
+		<PackageProjectUrl>https://github.com/OneBitSoftware/OneBitSoftware.Slovom</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.7.0.110445">
