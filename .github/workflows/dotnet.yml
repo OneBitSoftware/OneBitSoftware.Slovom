@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 9.x
         
     - name: Restore dependencies
-      run: dotnet restore src/OneBitSoftware.Slovom/OneBitSoftware.Slovom.sln
+      run: dotnet restore src/OneBitSoftware.Slovom.sln
       
     - name: Build
       run: dotnet build --no-restore
