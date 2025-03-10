@@ -1,5 +1,6 @@
 # OneBitSoftware.Slovom
 ![test](https://github.com/OneBitSoftware/OneBitSoftware.Slovom/actions/workflows/dotnet.yml/badge.svg)
+![](https://img.shields.io/nuget/v/OneBitSoftware.Slovom)
 ![](https://img.shields.io/badge/OneBit-Software-33ccff)
 
 A .NET library that converts currency values into words in Bulgarian for accounting purposes.
@@ -12,13 +13,11 @@ Example: Input: `32048.27` Outpud: `тридесет и две хиляди и �
 - The current maximum value is `999999.99` and the minimum is `0.`.
 
 ## AI Story
-This project is my first attempt to build something with GitHub Copilot. I did my best to not give up on it, however my patience was over at one point.
-GitHub Copilot just couldn't get my requirements thoroughly enough and it never gave something that works without me intervening.
-I made many attempts to improve functions with detailed prompts, but it never gave enough value.
+This project is my first attempt to build something with GitHub Copilot, with as little intervention as possible.
+GitHub Copilot just couldn't understand my requirements thoroughly enough and it never gave something that satisfies all requirements together.
+I made many attempts to improve functions with detailed prompts, but cade was always unsatisfactory. I did my best to not give up on it, however my patience was over at one point.
 
-Generating InlineData for the tests failed into an infinite loop (and the token limit kicked in).
-
-Nothing generated as code passed all the tests no matter how I structured prompts.
+Generating InlineData for the tests failed into an infinite loop (and the token limit kicked in). Nothing generated as code passed all the tests no matter how I structured prompts. Prompting it to fix the code so tests pass never got me anywhere
 
 I eventually had to correct the code myself. The end result is an abomination, but it works.
 
@@ -44,6 +43,7 @@ dotnet add package OneBitSoftware.Slovom
 |1.20|един лев и 20 ст.|
 |1019.78|хиляда и деветнадесет лева и 78 ст.|
 |1119.78|хиляда сто и деветнадесет лева и 78 ст.|
+|2014.78|две хиляди и четиринадесет лева и 78 ст.|
 |32478.27|тридесет и две хиляди четиристотин седемдесет и осем лева и 27 ст.|
 
 ## Contributing

@@ -105,7 +105,7 @@
                     return tens[o] + " хиляди и " + Hundreds(n);
                 }
 
-                return tens[o] + " хиляди " + Hundreds(n);
+                return BuildThousandsWithoutAnd(tens[o], Hundreds(n));
             }
 
             if (number >= 11000 && number < 20000)
@@ -177,10 +177,10 @@
 
             if (leva == 0)
             {
-                if (stotinki == 0) return "нула" + AppendLvFemale;
+                if (stotinki == 0) return under20[leva] + AppendLvFemale;
                 if (stotinki == 1) return "една" + AppendStotinka;
                 if (stotinki == 2) return "две" + AppendStotinki;
-                if (stotinki == 10) return "десет" + AppendStotinki;
+                if (stotinki == 10) return under20[stotinki] + AppendStotinki;
                 if (stotinki < 20) return under20[stotinki] + AppendStotinki;
 
                 stotinkiWords = stotinki.ToString() + " " + AppendStotinkaShort;

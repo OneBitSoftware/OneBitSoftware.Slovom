@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>OneBitSoftware.Slovom</PackageId>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>Radi Atanassov</Authors>
 		<Company>OneBit Software</Company>
 		<Description>A .NET library for converting currency values into Bulgarian words, tailored for accounting needs.</Description>
