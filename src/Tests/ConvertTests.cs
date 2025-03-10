@@ -69,8 +69,8 @@
         }
 
         [Theory]
-        [InlineData(-1, "един лев")] // Assuming negative values are treated as zero
-        [InlineData(-0.01, "една стотинка")] // Assuming negative values are treated as zero
+        [InlineData(-1, "един лев")] // Assuming negative values are treated as positive
+        [InlineData(-0.01, "една стотинка")] // Assuming negative values are treated as positive
         [InlineData(-32478.27, "тридесет и две хиляди четиристотин седемдесет и осем лева и 27 ст.")]
         public void NumberToWordsBG_ShouldReturnCorrectWordsForNegativeValues(decimal number, string expected)
         {
