@@ -15,11 +15,11 @@ Example: Input: `32048.27` Outpud: `тридесет и две хиляди и �
 ## AI Story
 This project is my first attempt to build something with GitHub Copilot, with as little intervention as possible.
 GitHub Copilot just couldn't understand my requirements thoroughly enough and it never gave something that satisfies all requirements together.
-I made many attempts to improve functions with detailed prompts, but cade was always unsatisfactory. I did my best to not give up on it, however my patience was over at one point.
+I made many attempts to improve functions with detailed prompts, but code was always unsatisfactory. I did my best to not give up on it, however my patience was over at one point.
 
-Generating InlineData for the tests failed into an infinite loop (and the token limit kicked in). Nothing generated as code passed all the tests no matter how I structured prompts. Prompting it to fix the code so tests pass never got me anywhere
+Generating InlineData for the tests failed into an infinite loop (and the token limits kicked in). Nothing generated as code passed all the tests no matter how I structured prompts. Prompting it to fix the code so tests pass never got the necessary results.
 
-I eventually had to correct the code myself. The end result is an abomination, but it works.
+I eventually had to correct the code myself. The end result is an abomination, but it works. I still feel that I would have spent less time writing it from scratch.
 
 ## Installation
 You can install the OneBitSoftware.Slovom assembly through the NuGet package [NuGet](https://www.nuget.org/packages/OneBitSoftware.Slovom):
