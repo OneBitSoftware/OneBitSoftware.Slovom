@@ -2,17 +2,17 @@
 {
     public static class NumbersToWords
     {
-        static string[] under20 = { "нула", "един", "два", "три", "четири", "пет", "шест", "седем", "осем", "девет", "десет", "единадесет", "дванадесет", "тринадесет", "четиринадесет", "петнадесет", "шестнадесет", "седемнадесет", "осемнадесет", "деветнадесет" };
-        static string[] units = { "нула", "едно", "две", "три", "четири", "пет", "шест", "седем", "осем", "девет" };
-        static string[] teens = { "десет", "единадесет", "дванадесет", "тринадесет", "четиринадесет", "петнадесет", "шестнадесет", "седемнадесет", "осемнадесет", "деветнадесет" };
-        static string[] tens = { "", "десет", "двадесет", "тридесет", "четиридесет", "петдесет", "шестдесет", "седемдесет", "осемдесет", "деветдесет" };
-        static string[] hundreds = { "", "сто", "двеста", "триста", "четиристотин", "петстотин", "шестстотин", "седемстотин", "осемстотин", "деветстотин" };
+        private static readonly string[] under20 = ["нула", "един", "два", "три", "четири", "пет", "шест", "седем", "осем", "девет", "десет", "единадесет", "дванадесет", "тринадесет", "четиринадесет", "петнадесет", "шестнадесет", "седемнадесет", "осемнадесет", "деветнадесет"];
+        private static readonly string[] units = ["нула", "едно", "две", "три", "четири", "пет", "шест", "седем", "осем", "девет"];
+        private static readonly string[] teens = ["десет", "единадесет", "дванадесет", "тринадесет", "четиринадесет", "петнадесет", "шестнадесет", "седемнадесет", "осемнадесет", "деветнадесет"];
+        private static readonly string[] tens = ["", "десет", "двадесет", "тридесет", "четиридесет", "петдесет", "шестдесет", "седемдесет", "осемдесет", "деветдесет"];
+        private static readonly string[] hundreds = ["", "сто", "двеста", "триста", "четиристотин", "петстотин", "шестстотин", "седемстотин", "осемстотин", "деветстотин"];
 
-        static string AppendLvMale = " лев";
-        static string AppendLvFemale = " лева";
-        static string AppendStotinki = " стотинки";
-        static string AppendStotinka = " стотинка";
-        static string AppendStotinkaShort = "ст.";
+        private static readonly string AppendLvMale = " лев";
+        private static readonly string AppendLvFemale = " лева";
+        private static readonly string AppendStotinki = " стотинки";
+        private static readonly string AppendStotinka = " стотинка";
+        private static readonly string AppendStotinkaShort = "ст.";
 
         static string ConvertWholeNumber(int n)
         {
@@ -88,10 +88,9 @@
             var e = n % 1000;
             var b = n / 1000;
             var i = number / 1000;
-            var t = i / 100;
-            var s = i % 10;
-            var of = e % 100;
-            var tware = of % 10;
+            var t = i % 10;
+            var soft = e % 100;
+            var ware = soft % 10;
 
             if (number > 10000 && number < 10099)
             {
@@ -100,7 +99,7 @@
 
             if (number >= 10099 && number < 11000)
             {
-                if (of == 0) // 10100, 10900, 10800 , etc
+                if (soft == 0) // 10100, 10900, 10800 , etc
                 {
                     return tens[o] + " хиляди и " + Hundreds(n);
                 }
@@ -110,14 +109,14 @@
 
             if (number >= 11000 && number < 20000)
             {
-                if (of == 0) // 11100, 11900, 11800 , etc
+                if (soft == 0) // 11100, 11900, 11800 , etc
                 {
-                    if (e == 0) return teens[s] + " хиляди";
+                    if (e == 0) return teens[t] + " хиляди";
 
-                    return BuildThousandsWithAnd(teens[s], Hundreds(e));
+                    return BuildThousandsWithAnd(teens[t], Hundreds(e));
                 }
 
-                return BuildThousandsWithoutAnd(teens[s], Hundreds(e));
+                return BuildThousandsWithoutAnd(teens[t], Hundreds(e));
             }
 
             if (number > 20000 && number < 99999)
@@ -126,18 +125,18 @@
                 {
                     if (e < 100)  return tens[o] + " и една хиляди и " + Tens(e);
 
-                    if (tware == 0) return tens[o] + " и една хиляди и " + Hundreds(e);
+                    if (ware == 0) return tens[o] + " и една хиляди и " + Hundreds(e);
 
-                    if (tware > 0) return tens[o] + " и една хиляди " + Hundreds(e);
+                    if (ware > 0) return tens[o] + " и една хиляди " + Hundreds(e);
                 }
 
                 if (b == 2)
                 {
                     if (e < 100) return tens[o] + " и две хиляди и " + Tens(e);
 
-                    if (tware == 0) return tens[o] + " и две хиляди и " + Hundreds(e);
+                    if (ware == 0) return tens[o] + " и две хиляди и " + Hundreds(e);
 
-                    if (tware > 0) return tens[o] + " и две хиляди " + Hundreds(e);
+                    if (ware > 0) return tens[o] + " и две хиляди " + Hundreds(e);
                 }
 
                 return BuildThousandsWithAnd(Tens(i), Hundreds(e));
@@ -145,7 +144,7 @@
 
             if (n == 0) return tens[o] + " хиляди"; // 10000,20000,30000, etc
 
-            if (n < 100) return BuildThousandsWithAnd(tens[o], Tens(of));
+            if (n < 100) return BuildThousandsWithAnd(tens[o], Tens(soft));
 
             return BuildThousandsWithoutAnd(Tens(i), Hundreds(e));
         }

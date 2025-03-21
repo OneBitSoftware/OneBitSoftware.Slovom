@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFrameworks>net9.0;net8.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>OneBitSoftware.Slovom</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<Authors>Radi Atanassov</Authors>
 		<Company>OneBit Software</Company>
 		<Description>A .NET library for converting currency values into Bulgarian words, tailored for accounting needs.</Description>
