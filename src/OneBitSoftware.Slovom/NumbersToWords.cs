@@ -1,77 +1,67 @@
 ﻿namespace OneBitSoftware.Slovom;
 
+using OneBitSoftware.Slovom.Currencies;
+
 public static class NumbersToWords
 {
-    private const string AppendLvMale = " лев";
-    private const string AppendLvFemale = " лева";
-    private const string AppendStotinki = " стотинки";
-    private const string AppendStotinka = " стотинка";
-    private const string AppendStotinkaShort = "ст.";
-    
-    private static readonly string[] NumbersZeroToNineteen = ["нула", "един", "два", "три", "четири", "пет", "шест", "седем", "осем", "девет", "десет", "единадесет", "дванадесет", "тринадесет", "четиринадесет", "петнадесет", "шестнадесет", "седемнадесет", "осемнадесет", "деветнадесет"];
-    private static readonly string[] SingleDigitsNeutral = ["нула", "едно", "две", "три", "четири", "пет", "шест", "седем", "осем", "девет"];
-    private static readonly string[] NumbersTenToNineteen = ["десет", "единадесет", "дванадесет", "тринадесет", "четиринадесет", "петнадесет", "шестнадесет", "седемнадесет", "осемнадесет", "деветнадесет"];
-    private static readonly string[] TensMultiples = ["", "десет", "двадесет", "тридесет", "четиридесет", "петдесет", "шестдесет", "седемдесет", "осемдесет", "деветдесет"];
-    private static readonly string[] HundredsMultiples = ["", "сто", "двеста", "триста", "четиристотин", "петстотин", "шестстотин", "седемстотин", "осемстотин", "деветстотин"];
-
-    private static string ConvertWholeNumber(int number)
+    private static string ConvertWholeNumber(int number, NumberWordsVocabulary numberWordsVocabulary)
     {
         return number switch
         {
-            < 20 => NumbersZeroToNineteen[number],
-            < 100 => Tens(number),
-            < 1000 => Hundreds(number),
-            < 10000 => Thousands(number),
-            < 100000 => TensOfThousands(number),
+            < 20 => numberWordsVocabulary.NumbersZeroToNineteen[number],
+            < 100 => Tens(number, numberWordsVocabulary),
+            < 1000 => Hundreds(number, numberWordsVocabulary),
+            < 10000 => Thousands(number, numberWordsVocabulary),
+            < 100000 => TensOfThousands(number, numberWordsVocabulary),
             _ => "Числото е твърде голямо"
         };
     }
 
-    private static string Tens(int n)
+    private static string Tens(int n, NumberWordsVocabulary numberWordsVocabulary)
     {
-        if (n < 20) return NumbersZeroToNineteen[n];
+        if (n < 20) return numberWordsVocabulary.NumbersZeroToNineteen[n];
 
         var i = n / 10;
         var d = n % 10;
 
-        return TensMultiples[i] + (d == 0 ? "" : " и " + NumbersZeroToNineteen[d]);
+        return numberWordsVocabulary.TensMultiples[i] + (d == 0 ? "" : " и " + numberWordsVocabulary.NumbersZeroToNineteen[d]);
     }
 
-    private static string Hundreds(int n)
+    private static string Hundreds(int n, NumberWordsVocabulary numberWordsVocabulary)
     {
         var i = n / 100;
         var d = n % 100;
 
         switch (n)
         {
-            case < 120: return HundredsMultiples[i] + " и " + NumbersZeroToNineteen[d];
-            case < 200: return HundredsMultiples[i] + " " + ConvertWholeNumber(d);
+            case < 120: return numberWordsVocabulary.HundredsMultiples[i] + " и " + numberWordsVocabulary.NumbersZeroToNineteen[d];
+            case < 200: return numberWordsVocabulary.HundredsMultiples[i] + " " + ConvertWholeNumber(d, numberWordsVocabulary);
         }
 
-        if (d < 20) return HundredsMultiples[i] + (d == 0 ? "" : " и " + ConvertWholeNumber(d));
+        if (d < 20) return numberWordsVocabulary.HundredsMultiples[i] + (d == 0 ? "" : " и " + ConvertWholeNumber(d, numberWordsVocabulary));
         
-        return HundredsMultiples[i] + (d == 0 ? "" : " " + ConvertWholeNumber(d));
+        return numberWordsVocabulary.HundredsMultiples[i] + (d == 0 ? "" : " " + ConvertWholeNumber(d, numberWordsVocabulary));
     }
 
-    private static string Thousands(int n)
+    private static string Thousands(int n, NumberWordsVocabulary numberWordsVocabulary)
     {
         var i = n / 1000;
         var d = n % 1000;
 
         if (n == 1000) return "хиляда";
 
-        if (n is > 1000 and < 1099) return "хиляда и " + Tens(d);
+        if (n is > 1000 and < 1099) return "хиляда и " + Tens(d, numberWordsVocabulary);
 
-        if (n is > 1099 and < 2000) return "хиляда " + Hundreds(d);
+        if (n is > 1099 and < 2000) return "хиляда " + Hundreds(d, numberWordsVocabulary);
 
-        if (d == 0) return SingleDigitsNeutral[i] + " хиляди"; // 2000,3000,4000, etc
+        if (d == 0) return numberWordsVocabulary.SingleDigitsNeutral[i] + " хиляди"; // 2000,3000,4000, etc
 
-        if (d < 100) return SingleDigitsNeutral[i] + " хиляди и " + Tens(d);
+        if (d < 100) return numberWordsVocabulary.SingleDigitsNeutral[i] + " хиляди и " + Tens(d, numberWordsVocabulary);
 
-        return SingleDigitsNeutral[i] + " хиляди " + Hundreds(d);
+        return numberWordsVocabulary.SingleDigitsNeutral[i] + " хиляди " + Hundreds(d, numberWordsVocabulary);
     }
 
-    private static string TensOfThousands(int number)
+    private static string TensOfThousands(int number, NumberWordsVocabulary numberWordsVocabulary)
     {
         var o = number / 10000;
         var n = number % 10000;
@@ -82,54 +72,54 @@ public static class NumbersToWords
         var soft = e % 100;
         var ware = soft % 10;
 
-        if (number is > 10000 and < 10099) return TensMultiples[o] + " хиляди и " + Tens(n);
+        if (number is > 10000 and < 10099) return numberWordsVocabulary.TensMultiples[o] + " хиляди и " + Tens(n, numberWordsVocabulary);
 
         if (number is >= 10099 and < 11000)
         {
             if (soft == 0) // 10100, 10900, 10800 , etc
             {
-                return TensMultiples[o] + " хиляди и " + Hundreds(n);
+                return numberWordsVocabulary.TensMultiples[o] + " хиляди и " + Hundreds(n, numberWordsVocabulary);
             }
 
-            return BuildThousandsWithoutAnd(TensMultiples[o], Hundreds(n));
+            return BuildThousandsWithoutAnd(numberWordsVocabulary.TensMultiples[o], Hundreds(n, numberWordsVocabulary));
         }
 
         if (number is >= 11000 and < 20000)
         {
-            if (soft != 0) return BuildThousandsWithoutAnd(NumbersTenToNineteen[t], Hundreds(e)); // 11100, 11900, 11800 , etc
-            if (e == 0) return NumbersTenToNineteen[t] + " хиляди";
+            if (soft != 0) return BuildThousandsWithoutAnd(numberWordsVocabulary.NumbersTenToNineteen[t], Hundreds(e, numberWordsVocabulary)); // 11100, 11900, 11800 , etc
+            if (e == 0) return numberWordsVocabulary.NumbersTenToNineteen[t] + " хиляди";
 
-            return BuildThousandsWithAnd(NumbersTenToNineteen[t], Hundreds(e));
+            return BuildThousandsWithAnd(numberWordsVocabulary.NumbersTenToNineteen[t], Hundreds(e, numberWordsVocabulary));
         }
 
         if (number is > 20000 and < 99999)
         {
             if (b == 1)
             {
-                if (e < 100)  return TensMultiples[o] + " и една хиляди и " + Tens(e);
+                if (e < 100)  return numberWordsVocabulary.TensMultiples[o] + " и една хиляди и " + Tens(e, numberWordsVocabulary);
 
-                if (ware == 0) return TensMultiples[o] + " и една хиляди и " + Hundreds(e);
+                if (ware == 0) return numberWordsVocabulary.TensMultiples[o] + " и една хиляди и " + Hundreds(e, numberWordsVocabulary);
 
-                if (ware > 0) return TensMultiples[o] + " и една хиляди " + Hundreds(e);
+                if (ware > 0) return numberWordsVocabulary.TensMultiples[o] + " и една хиляди " + Hundreds(e, numberWordsVocabulary);
             }
 
             if (b == 2)
             {
-                if (e < 100) return TensMultiples[o] + " и две хиляди и " + Tens(e);
+                if (e < 100) return numberWordsVocabulary.TensMultiples[o] + " и две хиляди и " + Tens(e, numberWordsVocabulary);
 
-                if (ware == 0) return TensMultiples[o] + " и две хиляди и " + Hundreds(e);
+                if (ware == 0) return numberWordsVocabulary.TensMultiples[o] + " и две хиляди и " + Hundreds(e, numberWordsVocabulary);
 
-                if (ware > 0) return TensMultiples[o] + " и две хиляди " + Hundreds(e);
+                if (ware > 0) return numberWordsVocabulary.TensMultiples[o] + " и две хиляди " + Hundreds(e, numberWordsVocabulary);
             }
 
-            return BuildThousandsWithAnd(Tens(i), Hundreds(e));
+            return BuildThousandsWithAnd(Tens(i, numberWordsVocabulary), Hundreds(e, numberWordsVocabulary));
         }
 
-        if (n == 0) return TensMultiples[o] + " хиляди"; // 10000,20000,30000, etc
+        if (n == 0) return numberWordsVocabulary.TensMultiples[o] + " хиляди"; // 10000,20000,30000, etc
 
-        if (n < 100) return BuildThousandsWithAnd(TensMultiples[o], Tens(soft));
+        if (n < 100) return BuildThousandsWithAnd(numberWordsVocabulary.TensMultiples[o], Tens(soft, numberWordsVocabulary));
 
-        return BuildThousandsWithoutAnd(Tens(i), Hundreds(e));
+        return BuildThousandsWithoutAnd(Tens(i, numberWordsVocabulary), Hundreds(e, numberWordsVocabulary));
     }
 
     private static string BuildThousandsWithoutAnd(string thousands, string afterThousands)
@@ -142,34 +132,36 @@ public static class NumbersToWords
         return thousands + " хиляди и " + afterThousands;
     }
 
-    public static string Convert(decimal number)
+    public static string Convert(decimal number, CurrencyDescriptor currencyDescriptor)
     {
-        if (number is 0 or 0.0m)  return NumbersZeroToNineteen[0] + AppendLvFemale; // нула лева
+        ArgumentNullException.ThrowIfNull(currencyDescriptor);
+        
+        if (number is 0 or 0.0m)  return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[0] + currencyDescriptor.MajorCurrencyUnitPlural; // нула лева, нула евро
 
         number = Math.Abs(number); // Convert negative number to positive
 
         var leva = (int)number;
         var stotinki = (int)((number % 1.0m) * 100);
 
-        if (number == 1 && stotinki == 0) return NumbersZeroToNineteen[leva] + AppendLvMale; // един лев
+        if (number == 1 && stotinki == 0) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitSingular; // един лев, едно евро
 
-        var levaWords = leva != 1 ? ConvertWholeNumber(leva) + AppendLvFemale : "един" + AppendLvMale;
+        var levaWords = leva != 1 ? ConvertWholeNumber(leva, currencyDescriptor.Vocabulary) + currencyDescriptor.MajorCurrencyUnitPlural : currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitSingular;
 
         string stotinkiWords;
 
         if (leva == 0)
         {
-            if (stotinki == 0) return NumbersZeroToNineteen[leva] + AppendLvFemale;
-            if (stotinki == 1) return "една" + AppendStotinka;
-            if (stotinki == 2) return "две" + AppendStotinki;
-            if (stotinki == 10) return NumbersZeroToNineteen[stotinki] + AppendStotinki;
-            if (stotinki < 20) return NumbersZeroToNineteen[stotinki] + AppendStotinki;
+            if (stotinki == 0) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitPlural;
+            if (stotinki == 1) return currencyDescriptor.Vocabulary.MinorCurrencyUnitSingular + currencyDescriptor.MinorCurrencyUnitSingular;
+            if (stotinki == 2) return "две" + currencyDescriptor.MinorCurrencyUnitPlural;
+            if (stotinki == 10) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[stotinki] + currencyDescriptor.MinorCurrencyUnitPlural;
+            if (stotinki < 20) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[stotinki] + currencyDescriptor.MinorCurrencyUnitPlural;
 
-            stotinkiWords = stotinki + " " + AppendStotinkaShort;
+            stotinkiWords = stotinki + " " + currencyDescriptor.MinorCurrencyUnitAbbreviated;
         }
         else
         {
-            stotinkiWords = stotinki + " " + AppendStotinkaShort;
+            stotinkiWords = stotinki + " " + currencyDescriptor.MinorCurrencyUnitAbbreviated;
         }
 
         if (leva == 0) return stotinkiWords;
