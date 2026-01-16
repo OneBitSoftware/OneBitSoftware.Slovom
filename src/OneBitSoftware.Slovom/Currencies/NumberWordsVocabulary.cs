@@ -10,6 +10,8 @@
 /// </remarks>
 public sealed record NumberWordsVocabulary
 {
+    internal NumberWordsVocabulary() { }
+    
     /// <summary>
     /// Gets or inits the word representation for the singular form of the minor currency unit.
     /// </summary>

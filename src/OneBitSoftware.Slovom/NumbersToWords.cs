@@ -4,9 +4,8 @@ using OneBitSoftware.Slovom.Currencies;
 
 public static class NumbersToWords
 {
-    private static string ConvertWholeNumber(int number, NumberWordsVocabulary numberWordsVocabulary)
-    {
-        return number switch
+    private static string ConvertWholeNumber(int number, NumberWordsVocabulary numberWordsVocabulary) =>
+        number switch
         {
             < 20 => numberWordsVocabulary.NumbersZeroToNineteen[number],
             < 100 => Tens(number, numberWordsVocabulary),
@@ -15,7 +14,6 @@ public static class NumbersToWords
             < 100000 => TensOfThousands(number, numberWordsVocabulary),
             _ => "Числото е твърде голямо"
         };
-    }
 
     private static string Tens(int n, NumberWordsVocabulary numberWordsVocabulary)
     {
@@ -122,15 +120,9 @@ public static class NumbersToWords
         return BuildThousandsWithoutAnd(Tens(i, numberWordsVocabulary), Hundreds(e, numberWordsVocabulary));
     }
 
-    private static string BuildThousandsWithoutAnd(string thousands, string afterThousands)
-    {
-        return thousands + " хиляди " + afterThousands;
-    }
+    private static string BuildThousandsWithoutAnd(string thousands, string afterThousands) => thousands + " хиляди " + afterThousands;
 
-    private static string BuildThousandsWithAnd(string thousands, string afterThousands)
-    {
-        return thousands + " хиляди и " + afterThousands;
-    }
+    private static string BuildThousandsWithAnd(string thousands, string afterThousands) => thousands + " хиляди и " + afterThousands;
 
     public static string Convert(decimal number, CurrencyDescriptor currencyDescriptor)
     {
