@@ -42,6 +42,25 @@ Or via the .NET Core command line interface:
 dotnet add package OneBitSoftware.Slovom
 ```
 
+## Usage
+
+To use the library, call the `NumbersToWords.Convert` method, passing the amount and the desired currency descriptor.
+
+```csharp
+using OneBitSoftware.Slovom;
+using OneBitSoftware.Slovom.Currencies;
+
+// Convert BGN
+decimal amountBgn = 1234.56m;
+string resultBgn = NumbersToWords.Convert(amountBgn, CurrencyDescriptor.Bgn);
+// Result: "хиляда двеста тридесет и четири лева и 56 ст."
+
+// Convert EUR
+decimal amountEur = 1234.56m;
+string resultEur = NumbersToWords.Convert(amountEur, CurrencyDescriptor.Euro);
+// Result: "хиляда двеста тридесет и четири евро и 56 ц."
+```
+
 ## Examples
 
 ## BGN examples
