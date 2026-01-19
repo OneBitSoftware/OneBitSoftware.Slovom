@@ -5,12 +5,23 @@
 
 A .NET library that converts currency values into words in Bulgarian for accounting purposes.
 
-Example: Input: `32048.27` Outpud: `тридесет и две хиляди и четиридесет и осем лева и 27 ст.`
+Example BGN: Input: `32048.27` Output: `тридесет и две хиляди и четиридесет и осем лева и 27 ст.`
+Example EUR: Input: `32048.27` Output: `тридесет и две хиляди и четиридесет и осем евро и 27 ц.`
 
 ## Functionality
 - It takes into consideration the [grammatical gender](https://en.wikipedia.org/wiki/Grammatical_gender).
+- It supports negative values.
 - It writes decimal fractions in the short form: `X лева и ст.` when the value is above zero, and the full word when it is under the value of `1`: `девет стотинки`.
-- The current maximum value is `999999.99` and the minimum is `0.`.
+- The current maximum value is `999999.99` and the minimum is `-999999.99`.
+
+## Supported currencies
+
+The library supports the following currencies through predefined descriptors:
+
+| Currency | Code | Major Unit | Minor Unit | Usage |
+|----------|------|------------|------------|-------|
+| Bulgarian Lev | BGN | лев/лева | стотинка/стотинки | `CurrencyDescriptor.Bgn` |
+| Euro | EUR | евро | евроцент/евроцента | `CurrencyDescriptor.Euro` |
 
 ## AI Story
 This project is my first attempt to build something with GitHub Copilot, with as little intervention as possible.
@@ -33,6 +44,7 @@ dotnet add package OneBitSoftware.Slovom
 
 ## Examples
 
+## BGN examples
 |Input|Output|
 |--------|-------|
 |0|нула лева|
@@ -45,6 +57,21 @@ dotnet add package OneBitSoftware.Slovom
 |1119.78|хиляда сто и деветнадесет лева и 78 ст.|
 |2014.78|две хиляди и четиринадесет лева и 78 ст.|
 |32478.27|тридесет и две хиляди четиристотин седемдесет и осем лева и 27 ст.|
+
+
+## EURO examples
+|Input| Output                                                            |
+|--------|-------------------------------------------------------------------|
+|0| нула евро                                                         |
+|1| едно евро                                                         |
+|2| две евро                                                          |
+|19| деветнадесет евро                                                 |
+|0.1| десет евроцента                                                   |
+|1.20| едно евро и 20 ц.                                                 |
+|1019.78| хиляда и деветнадесет евро и 78 ц.                                |
+|1119.78| хиляда сто и деветнадесет евро и 78 ц.                            |
+|2014.78| две хиляди и четиринадесет евро и 78 ц.                           |
+|32478.27| тридесет и две хиляди четиристотин седемдесет и осем евро и 27 ц. |
 
 ## Contributing
 Feel free to raise a PR to improve the code quality or add new features.
