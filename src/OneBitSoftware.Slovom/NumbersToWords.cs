@@ -30,11 +30,14 @@ public static class NumbersToWords
         var i = n / 100;
         var d = n % 100;
 
-        switch (n)
+        if (n < 120)
         {
-            case < 120: return numberWordsVocabulary.HundredsMultiples[i] + " и " + numberWordsVocabulary.NumbersZeroToNineteen[d];
-            case < 200: return numberWordsVocabulary.HundredsMultiples[i] + " " + ConvertWholeNumber(d, numberWordsVocabulary);
+            if (d == 0) return numberWordsVocabulary.HundredsMultiples[i];
+            
+            return numberWordsVocabulary.HundredsMultiples[i] + " и " + numberWordsVocabulary.NumbersZeroToNineteen[d];
         }
+
+        if (n < 200) return numberWordsVocabulary.HundredsMultiples[i] + " " + ConvertWholeNumber(d, numberWordsVocabulary);
 
         if (d < 20) return numberWordsVocabulary.HundredsMultiples[i] + (d == 0 ? "" : " и " + ConvertWholeNumber(d, numberWordsVocabulary));
         
@@ -124,18 +127,26 @@ public static class NumbersToWords
 
     private static string BuildThousandsWithAnd(string thousands, string afterThousands) => thousands + " хиляди и " + afterThousands;
 
+    private static string AppendNegativePrefix(string numberAsWords, bool isNegativeNumber)
+    {
+        if (!isNegativeNumber) return numberAsWords;
+
+        return "Минус " + numberAsWords;
+    }
+
     public static string Convert(decimal number, CurrencyDescriptor currencyDescriptor)
     {
         ArgumentNullException.ThrowIfNull(currencyDescriptor);
         
         if (number is 0 or 0.0m)  return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[0] + currencyDescriptor.MajorCurrencyUnitPlural; // нула лева, нула евро
 
+        var isNegativeNumber = number < 0;
         number = Math.Abs(number); // Convert negative number to positive
 
         var leva = (int)number;
         var stotinki = (int)((number % 1.0m) * 100);
 
-        if (number == 1 && stotinki == 0) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitSingular; // един лев, едно евро
+        if (number == 1 && stotinki == 0) return AppendNegativePrefix(currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitSingular, isNegativeNumber); // един лев, едно евро
 
         var levaWords = leva != 1 ? ConvertWholeNumber(leva, currencyDescriptor.Vocabulary) + currencyDescriptor.MajorCurrencyUnitPlural : currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitSingular;
 
@@ -143,22 +154,19 @@ public static class NumbersToWords
 
         if (leva == 0)
         {
-            if (stotinki == 0) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitPlural;
-            if (stotinki == 1) return currencyDescriptor.Vocabulary.MinorCurrencyUnitSingular + currencyDescriptor.MinorCurrencyUnitSingular;
-            if (stotinki == 2) return "две" + currencyDescriptor.MinorCurrencyUnitPlural;
-            if (stotinki == 10) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[stotinki] + currencyDescriptor.MinorCurrencyUnitPlural;
-            if (stotinki < 20) return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[stotinki] + currencyDescriptor.MinorCurrencyUnitPlural;
+            if (stotinki == 0) return AppendNegativePrefix(currencyDescriptor.Vocabulary.NumbersZeroToNineteen[leva] + currencyDescriptor.MajorCurrencyUnitPlural, isNegativeNumber);
+            if (stotinki == 1) return AppendNegativePrefix(currencyDescriptor.Vocabulary.MinorCurrencyUnitSingular + currencyDescriptor.MinorCurrencyUnitSingular, isNegativeNumber);
+            if (stotinki == 2) return AppendNegativePrefix("две" + currencyDescriptor.MinorCurrencyUnitPlural, isNegativeNumber);
+            if (stotinki == 10) return AppendNegativePrefix(currencyDescriptor.Vocabulary.NumbersZeroToNineteen[stotinki] + currencyDescriptor.MinorCurrencyUnitPlural, isNegativeNumber);
+            if (stotinki < 20) return AppendNegativePrefix(currencyDescriptor.Vocabulary.NumbersZeroToNineteen[stotinki] + currencyDescriptor.MinorCurrencyUnitPlural, isNegativeNumber);
 
             stotinkiWords = stotinki + " " + currencyDescriptor.MinorCurrencyUnitAbbreviated;
         }
-        else
-        {
-            stotinkiWords = stotinki + " " + currencyDescriptor.MinorCurrencyUnitAbbreviated;
-        }
+        else stotinkiWords = stotinki + " " + currencyDescriptor.MinorCurrencyUnitAbbreviated;
 
-        if (leva == 0) return stotinkiWords;
-        if (stotinki == 0) return levaWords;
+        if (leva == 0) return AppendNegativePrefix(stotinkiWords, isNegativeNumber);
+        if (stotinki == 0) return AppendNegativePrefix(levaWords, isNegativeNumber);
         
-        return levaWords + " и " + stotinkiWords;
+        return AppendNegativePrefix(levaWords + " и " + stotinkiWords, isNegativeNumber);
     }
 }
