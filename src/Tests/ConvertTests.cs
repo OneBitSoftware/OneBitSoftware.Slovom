@@ -185,4 +185,12 @@ public class ConvertTests
         // Assert
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData(-100000)]
+    public void Convert_WithNumberLessThanNegativeLimit_ShouldThrowArgumentOutOfRangeException(decimal number)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => NumbersToWords.Convert(number, CurrencyDescriptor.Bgn));
+        Assert.Throws<ArgumentOutOfRangeException>(() => NumbersToWords.Convert(number, CurrencyDescriptor.Euro));
+    }
 }

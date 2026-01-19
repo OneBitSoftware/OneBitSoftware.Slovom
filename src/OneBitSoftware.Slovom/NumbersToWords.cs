@@ -136,6 +136,7 @@ public static class NumbersToWords
 
     public static string Convert(decimal number, CurrencyDescriptor currencyDescriptor)
     {
+        if (number < -99999.99m) throw new ArgumentOutOfRangeException(nameof(number), "Входното число не може да бъде по-малко от -99999.99");
         ArgumentNullException.ThrowIfNull(currencyDescriptor);
         
         if (number is 0 or 0.0m)  return currencyDescriptor.Vocabulary.NumbersZeroToNineteen[0] + currencyDescriptor.MajorCurrencyUnitPlural; // нула лева, нула евро
